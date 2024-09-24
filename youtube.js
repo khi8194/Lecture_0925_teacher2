@@ -25,7 +25,7 @@ fetch(url)
           : data.snippet.description;
 
       let date = data.snippet.publishedAt.split("T")[0].split("-").join(".");
-
+      //h2요소에 data-id라는 커스텀 속성을 만들어서 유튜브 영상 id값 숨겨놓음
       tags += `
         <article>
           <h2 class='vidTitle' data-id=${data.snippet.resourceId.videoId}>${title}</h2>         
@@ -46,7 +46,10 @@ fetch(url)
 
 //동적 생성요소에 이벤트 연결해서 동적으로 모달요소 추가
 document.body.addEventListener("click", (e) => {
+  //클릭한 대상인 h2요소에 data-id속성으로 숨겨놓은 유튜브 영상 id값을 변수에 옮겨담고
+  //동적으로 생성되는 iframe요소의 src값에 연동
   const vidId = e.target.getAttribute("data-id");
+
   if (e.target.className === "vidTitle") {
     const asideEl = document.createElement("aside");
     asideEl.innerHTML = `
