@@ -46,6 +46,7 @@ fetch(url)
 
 //동적 생성요소에 이벤트 연결해서 동적으로 모달요소 추가
 document.body.addEventListener("click", (e) => {
+  const vidId = e.target.getAttribute("data-id");
   if (e.target.className === "vidTitle") {
     const asideEl = document.createElement("aside");
     asideEl.innerHTML = `
