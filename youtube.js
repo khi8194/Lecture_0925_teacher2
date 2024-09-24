@@ -12,22 +12,27 @@ fetch(url)
     let tags = "";
 
     vidsData.forEach((data) => {
+      let title =
+        data.snippet.title.length > 60
+          ? data.snippet.title.substring(0, 60) + "..."
+          : data.snippet.title;
+
+      let desc =
+        data.snippet.description.length > 120
+          ? data.snippet.description.substring(0, 120) + "..."
+          : data.snippet.description;
+
       tags += `
         <article>
           <div class='pic'>
             <img src=${data.snippet.thumbnails.standard.url} alt=${data.snippet.title} />
           </div>
-          <h2>${data.snippet.title}</h2>
-          <p>${data.snippet.description}</p>
+          <h2>${title}</h2>
+          <p>${desc}</p>
           <span>${data.snippet.publishedAt}</span>
         </article>
       `;
     });
 
-    console.log(tags);
     frame.innerHTML = tags;
   });
-
-//미션 : 제목이 60글자넘어가면 ...말줄임표 처리
-//본문 120글자 넘어가면 ...말줄임표 처리
-//날짜를 2021.03.12 변경
