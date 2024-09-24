@@ -47,8 +47,14 @@ fetch(url)
 //동적 생성요소에 이벤트 연결해서 동적으로 모달요소 추가
 document.body.addEventListener("click", function (e) {
   if (e.target.className === "vidTitle") {
-    const asideEl = document.createElement("aside");
-    //append로 기존 요소 유지하면서 aside요소 추가 (인수로는 문자가 아닌 돔요소연결)
+    const asideEl = document.createElement("aside"); //엘리먼트 노드 직접 생성
+    //aside라는 비어있는 엘리먼트요소 안쪽에 기존처럼 innerHTML원하는 요소 동적 생성
+    asideEl.innerHTML = `
+      <div class='con'>
+      </div>
+      <button>close</button>
+    `;
+    //append로 기존 요소 유지하면서 aside요소 추가 (인수로는 문자가 아닌 엘리먼트 노드 필요)
     document.body.append(asideEl);
   }
 });
