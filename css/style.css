@@ -32,25 +32,64 @@ main section article {
   padding: 50px 0px;
   border-bottom: 1px solid #bbb;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 main section article h2 {
   width: 30%;
+  font: 300 30px/1 "raleway";
+  color: #777;
 }
 main section article .txt {
   width: 38%;
   display: flex;
   flex-wrap: wrap;
   align-content: space-between;
+  font-size: 1rem;
+  word-break: break-all;
+}
+main section article .txt span {
+  font: 300 1rem/1 "orbitron";
+  letter-spacing: 1px;
+  color: orange;
+  font-size: 0.8rem;
 }
 main section article .pic {
   width: 30%;
   height: 200px;
+  overflow: hidden;
 }
 main section article .pic img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: scale(1.4);
+}
+
+@media screen and (max-width: 899px) {
+  main section article h2 {
+    width: 48%;
+  }
+  main section article .txt {
+    width: 48%;
+  }
+  main section article .pic {
+    width: 100%;
+    margin-top: 30px;
+  }
+}
+@media screen and (max-width: 599px) {
+  main section article h2 {
+    width: 100%;
+  }
+  main section article .txt {
+    margin-top: 30px;
+    width: 100%;
+  }
+  main section article .pic {
+    width: 100%;
+    margin-top: 30px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
