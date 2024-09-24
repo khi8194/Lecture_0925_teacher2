@@ -51,5 +51,10 @@ fetch(url)
 
 //위에처럼 비동기적으로 발생하는 코드의 흐름을 강제적으로 동기적 처리
 //코드 작성순서대로 순차적으로 실행되게 만드는 작업 (동기화)
+
+//아직 fetch문의 동작이 끝나지 않아서 article의 h2요소의 생성이 완료되지 않았는데
+//아직 없는 동적요소인 h2를 호출함으로써 발생하는 오류
+//해결 방법 : 이벤트 위임 (Event Delegate) : 항상 있는 요소에 일단은 이벤트를 맡겨놓았다가
+//동적 요소가 생성되면 그때 이벤트를 대신 전달해주는 방법
 const titles = document.querySelectorAll("article h2");
 console.log(titles);
