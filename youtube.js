@@ -28,7 +28,7 @@ fetch(url)
 
       tags += `
         <article>
-          <h2 class='vidTitle'>${title}</h2>         
+          <h2 class='vidTitle' data-id=${data.snippet.resourceId.videoId}>${title}</h2>         
           
           <div class='txt'>
             <p>${desc}</p>
@@ -50,6 +50,7 @@ document.body.addEventListener("click", (e) => {
     const asideEl = document.createElement("aside");
     asideEl.innerHTML = `
       <div class='con'>
+        <iframe src="http://www.youtube.com/embed/${vidId}" frameborder="0"></iframe>
       </div>
       <button class='btnClose'>close</button>
     `;
