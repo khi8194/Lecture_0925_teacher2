@@ -14,7 +14,12 @@ fetch(url)
     vidsData.forEach((data) => {
       tags += `
         <article>
+          <div class='pic'>
+            <img src=${data.snippet.thumbnails.standard.url} alt=${data.snippet.title} />
+          </div>
           <h2>${data.snippet.title}</h2>
+          <p>${data.snippet.description}</p>
+          <span>${data.snippet.publishedAt}</span>
         </article>
       `;
     });
@@ -22,3 +27,7 @@ fetch(url)
     console.log(tags);
     frame.innerHTML = tags;
   });
+
+//미션 : 제목이 60글자넘어가면 ...말줄임표 처리
+//본문 120글자 넘어가면 ...말줄임표 처리
+//날짜를 2021.03.12 변경
