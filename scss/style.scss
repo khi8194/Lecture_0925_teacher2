@@ -57,6 +57,9 @@ main {
   }
 }
 
+//타블릿
+//article안쪽의 h2, .txt영역만 가로 절반씩 너비 배치
+//.pic요소는 100%로 변경해서 article 하나당 두줄 배치 처리
 @media screen and (max-width: 899px) {
   main {
     section {
@@ -76,6 +79,8 @@ main {
   }
 }
 
+//모바일 : h2, .txt. pic모두를 100% 너비설정해서
+//aritlce하나당 3줄씩 설정되게 스타일링
 @media screen and (max-width: 599px) {
   main {
     section {

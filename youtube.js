@@ -5,6 +5,7 @@ const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&pl
 
 const frame = document.querySelector("section");
 
+//유튜브 데이터를 가져와서 동적으로 리스트 출력
 fetch(url)
   .then((data) => data.json())
   .then((json) => {
@@ -42,3 +43,13 @@ fetch(url)
 
     frame.innerHTML = tags;
   });
+
+//위쪽의 fetch구문와 아래쪽의 동적으로 생성한 DOM요슬 변수 담는 구문은 동시에 실행됨
+//비동기적으로 동작함
+//코드의 작성순서대로 동작하는게 아니라 동시다발적으로 실행되기 때문에
+//코드흐름의 어그러지는 현상
+
+//위에처럼 비동기적으로 발생하는 코드의 흐름을 강제적으로 동기적 처리
+//코드 작성순서대로 순차적으로 실행되게 만드는 작업 (동기화)
+const titles = document.querySelectorAll("article h2");
+console.log(titles);
