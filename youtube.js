@@ -57,11 +57,23 @@ fetch(url)
 //이벤트 위임: 항상존재하는 body요소에 일단은 이벤트를 맡겼다가 동적요소가 생성완료되면 body가 대신 이벤트 전달
 
 document.body.addEventListener("click", function (e) {
-  //console.dir(e.target);
+  //console.dir(e.target); //사용자가 이벤트 발생시킨 대상
 
   //body전체에 이벤트를 연결한 뒤 이벤트발생한 실제대상을 조건문으로 분기처리해서
-  //조건에 부합될때에만 원하는 구문 연결 (이처럼 번거로운 작업을 처리하지 않기 위해서 리액트같은 프레임웍, 라이브러리)
+  //조건에 부합될때에만 원하는 구문 연결 (이처럼 번거로운 작업을 처리하지 않기 위해서 리액트같은 프레임웍, 라이브러리 사용)
   if (e.target.className === "vidTitle") {
     console.log("you clicked VidTitle");
+    //동적으로 aside로 모달창 생성
+    //해당 모달창을 절대 innerHTML로 생성 불가
+    //innerHTML은 기존의 선택자 안쪽의 요소들을 다 지우고 새로운 요소들로 바꿔치기 하는 개념
+    //지금 처럼 기존 목록 요소를 유치하면 모달만 추가하고자 할때는 적합하지 않음
+    //해결 방법: 부모선택자.append(동적 생성요소:돔객체)
+
+    //동적 돔 객체를 메서드를 통해서 직접 생성
+    const asideEl = document.createElement("aside"); //'aside'라는 엘리먼트 노드를 직접 생성
+    //body안쪽의 요소들을 그대로 유지하면서 동적으로 aside요소 추가
+    //prepend: 기존 요소 유지하면서 앞쪽에 추가
+    //append: 기존 요소 유지하면서 뒤쪽에 추가 (다 자주 사용)
+    document.body.append(asideEl);
   }
 });
