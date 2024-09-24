@@ -22,6 +22,8 @@ fetch(url)
           ? data.snippet.description.substring(0, 120) + "..."
           : data.snippet.description;
 
+      let date = data.snippet.publishedAt.split("T")[0].split("-").join(".");
+
       tags += `
         <article>
           <div class='pic'>
@@ -29,7 +31,7 @@ fetch(url)
           </div>
           <h2>${title}</h2>
           <p>${desc}</p>
-          <span>${data.snippet.publishedAt}</span>
+          <span>${date}</span>
         </article>
       `;
     });
