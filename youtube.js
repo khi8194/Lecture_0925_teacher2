@@ -1,32 +1,59 @@
-const api_key = "AIzaSyDfF904vE_uzyNlnhKgAyUmNWV9U5vTxZ0";
+//절차지향 프로그래밍 : 코드를 시간의 흐름에 따라 위에서부터 아래로 쭉 나열한 방식
+//절차지향 프로그래밍 장점 : 코드의 복잡도가 크기 않은 로직은 코드 가독성 좋음
+//절차지향 프로그래밍 단점 : 코드의 복잡도가 올라갈수록 오히려 코드 가독성이 안좋아짐
+//절자지향 프로그래밍 단점 : 특정 기능들이 미리 선언적 함수형태로 분리되어 있는 것이 아니기에 코드재활용 불가
+
+//프로그래밍시 추상화의 필요성
+//추상화 : 기능을 독립적으로 모듈화 시켜서 외부에 노출할 필요가 없는 정보값들을 숨기거나 코드의 재사용성을 높이는 방식
+//추상화를 위한 대표적인 프로그래밍 기법
+//객체지향 프로그래밍 (prototype) vs 함수형 프로그래밍 (lexical scope의 Clousure환경을 기반)
+//이벤트와 기능함수를 분리
+
+//Glbal Variables
 const pid = "PLHtvRFLN5v-W5bQjvyH8QTdQQhgflJ3nu";
 const num = 10;
-const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${pid}&key=${api_key}&maxResults=${num}`;
 
-const frame = document.querySelector("section");
+//Load Event binding
+fetchYoutube(pid, num);
 
-//유튜브 데이터를 가져와서 동적으로 리스트 출력
-fetch(url)
-  .then((data) => data.json())
-  .then((json) => {
-    const vidsData = json.items;
-    let tags = "";
+//Event Delegate
+document.body.addEventListener("click", (e) => {
+  e.target.className === "vidTitle" && createModal(e);
+  e.target.className === "btnClose" && removeModal();
+});
 
-    //데이터 반복 돌면서 innerHTML='태그문자열'로 동적 돔 생성
-    vidsData.forEach((data) => {
-      let title =
-        data.snippet.title.length > 60
-          ? data.snippet.title.substring(0, 60) + "..."
-          : data.snippet.title;
+//youtube data fetching
+function fetchYoutube(pid, num) {
+  const api_key = "AIzaSyDfF904vE_uzyNlnhKgAyUmNWV9U5vTxZ0";
+  const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${pid}&key=${api_key}&maxResults=${num}`;
+  fetch(url)
+    .then((data) => data.json())
+    .then((json) => {
+      const vidsData = json.items;
+      createList(vidsData);
+    });
+}
 
-      let desc =
-        data.snippet.description.length > 120
-          ? data.snippet.description.substring(0, 120) + "..."
-          : data.snippet.description;
+//createList
+function createList(arr) {
+  const frame = document.querySelector("section");
+  let tags = "";
 
-      let date = data.snippet.publishedAt.split("T")[0].split("-").join(".");
-      //h2요소에 data-id라는 커스텀 속성을 만들어서 유튜브 영상 id값 숨겨놓음
-      tags += `
+  //데이터 반복 돌면서 innerHTML='태그문자열'로 동적 돔 생성
+  arr.forEach((data) => {
+    let title =
+      data.snippet.title.length > 60
+        ? data.snippet.title.substring(0, 60) + "..."
+        : data.snippet.title;
+
+    let desc =
+      data.snippet.description.length > 120
+        ? data.snippet.description.substring(0, 120) + "..."
+        : data.snippet.description;
+
+    let date = data.snippet.publishedAt.split("T")[0].split("-").join(".");
+    //h2요소에 data-id라는 커스텀 속성을 만들어서 유튜브 영상 id값 숨겨놓음
+    tags += `
         <article>
           <h2 class='vidTitle' data-id=${data.snippet.resourceId.videoId}>${title}</h2>         
           
@@ -40,32 +67,24 @@ fetch(url)
           </div>
         </article>
       `;
-    });
-    frame.innerHTML = tags;
   });
+  frame.innerHTML = tags;
+}
 
-//동적 생성요소에 이벤트 연결해서 동적으로 모달요소 추가
-document.body.addEventListener("click", (e) => {
-  //클릭한 대상인 h2요소에 data-id속성으로 숨겨놓은 유튜브 영상 id값을 변수에 옮겨담고
-  //동적으로 생성되는 iframe요소의 src값에 연동
+//createModal
+function createModal(e) {
   const vidId = e.target.getAttribute("data-id");
-
-  if (e.target.className === "vidTitle") {
-    const asideEl = document.createElement("aside");
-    asideEl.innerHTML = `
+  const asideEl = document.createElement("aside");
+  asideEl.innerHTML = `
       <div class='con'>
         <iframe src="http://www.youtube.com/embed/${vidId}" frameborder="0"></iframe>
       </div>
       <button class='btnClose'>close</button>
     `;
-    document.body.append(asideEl);
-  }
-});
+  document.body.append(asideEl);
+}
 
-//동적으로 생성된 모달 닫기버튼에 이벤트 위침
-document.body.addEventListener("click", (e) => {
-  if (e.target.className === "btnClose") {
-    //display:none과는 다르게 물리적으로 DOM자체를 제거
-    document.querySelector("aside").remove();
-  }
-});
+//removeModal
+function removeModal() {
+  document.querySelector("aside").remove();
+}
